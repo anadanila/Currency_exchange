@@ -12,5 +12,8 @@ class HomeController extends Controller
     {
         return view('home.index');
     }
-
+//https://api.exchangeratesapi.io/v1/latest
+//? access_key = API_KEY
+//& base = USD
+//& symbols = GBP,JPY,EUR
 }

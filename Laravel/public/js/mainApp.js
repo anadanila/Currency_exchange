@@ -1,10 +1,17 @@
 var app = angular.module("myApp", []);
-app.controller("myCtrl", function ($scope) {
+app.run(function($rootScope) {
+    $rootScope.convert = function (amount, base_currency, rest_symbols) {
+        console.log('apelez functia de convert');
+        console.log('amount'+amount+'base_currency'+base_currency+'rest_symb'+rest_symbols);
+
+    }
+});
+app.controller("myCtrl", function ($scope, $rootScope) {
 
     var vm = this;
     vm.txtNum = ''; // set default value as empty to avoid error in directive
     vm.txtNumTwo = ''; //set default value as empty to avoid error in directive
-
+    vm.base = '';
     $scope.records = {
         "EUR-Euro": {
             "image_path": 'images/flags/europe.png',
@@ -14,28 +21,49 @@ app.controller("myCtrl", function ($scope) {
         "USD-US-DOLLAR": {
             "image_path": 'images/flags/SUA.png',
             "symbol": '$',
-            "txtNum":''
+            "txtNum": ''
         }
 
     };
-    console.log($scope.inputwsdss1);
+
     $scope.onlyNumbers = /^\d+$/;
     $scope.changeColor = function () {
         $scope.myColorVariable = "Aqua";
-        // console.log(myColorVariable);
         console.log('updated amount');
-        console.log($scope.records);
+        console.log($scope.records[Object.keys($scope.records)[$scope.selectedId]]['txtNum']);
+        //base currency that user is tipyng
+        amount=$scope.records[Object.keys($scope.records)[$scope.selectedId]]['txtNum'];
+        base_currency = Object.keys($scope.records)[$scope.selectedId].split("-");
+        base_currency = base_currency[0];
+        console.log('baza');
+        console.log(base_currency);
+        //get the rest symbols from front
+        symbols = Object.keys($scope.records);
+        var arrayLength = symbols.length;
+        rest_symbols = [];
+        for (var i = 0; i < arrayLength; i++) {
+            console.log(symbols[i]);
+
+            symbols[i] = symbols[i].split("-");
+            symbols[i] = symbols[i][0];
+            if (symbols[i] != base_currency) {
+                rest_symbols.push(symbols[i]);
+            }
+
+        }
+        //call function that send data to HomeController
+        $rootScope.convert(amount, base_currency, rest_symbols)
+        console.log('this is amount');
+        console.log($scope.records)
+        console.log(amount);
+        console.log('array cu restul simbolurilor');
+        console.log(rest_symbols);
         return $scope.myColorVariable;
     }
     $scope.selectedId = null;
     $scope.setSelected = function ($index) {
         $scope.selectedId = $index;
         console.log($scope.selectedId);
-    }
-    $scope.convert = function (valoare) {
-        console.log('apelez functia de convert');
-        console.log(valoare);
-
     }
 
 

@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" name="amount_to_convert" ng-keypress="changeColor()"
-                                   ng-change="input1=val.txtNum;"
+                                   ng-change="input1=val.txtNum"
                                    class="form-control" ng-init="val.txtNum=''" ng-model="val.txtNum" num-only placeholder="Enter amount"
                             >
                             <input type="hidden" ng-model="input1" ng-init='input1=""' />
