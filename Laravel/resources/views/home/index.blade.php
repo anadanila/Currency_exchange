@@ -20,7 +20,7 @@
 <body ng-app="myApp" ng-controller="myCtrl">
 
 <p id="title_app">Currency exchange </p>
-
+<button class="btn btn-default" ng-click="convert()">CONVERT</button>
 
 <!--divuri currency--->
 <div class="container">
@@ -41,15 +41,25 @@
                             <img class="flag" src="{{ asset('') }}@{{val.image_path}}">@{{ val.symbol }}
                         </div>
                         <div class="col-md-8">
-                            <input type="text" name="amount_to_convert" ng-keypress="changeColor()"
+                            <input type="text" name="amount_to_convert" ng-blur="changeColor(val.txtNum)"
                                    ng-change="input1=val.txtNum"
-                                   class="form-control" ng-init="val.txtNum=''" ng-model="val.txtNum" num-only placeholder="Enter amount"
+                                   class="form-control" ng-init="val.txtNum=''" ng-model="val.txtNum" num-only
+                                   placeholder="Enter amount"
                             >
-                            <input type="hidden" ng-model="input1" ng-init='input1=""' />
+                            <input type="hidden" ng-model="input1" ng-init='input1=""'/>
                             <h5 class="card-title">@{{name}}</h5>
-                            <p class="card-text">
-                                1 EUR=conversie
-                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="card-text" ng-model="base_c">
+                                        @{{base_c}}
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p ng-class="val_unit" ng-model="unit_converted">
+                                        @{{unit_converted}}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

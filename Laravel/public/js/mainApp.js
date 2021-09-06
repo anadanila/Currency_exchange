@@ -1,8 +1,22 @@
 var app = angular.module("myApp", []);
-app.run(function($rootScope) {
+app.run(function($rootScope, $http) {
+    $rootScope.returneazaConversii=function(valoare){
+        return valoare;
+    };
     $rootScope.convert = function (amount, base_currency, rest_symbols) {
-        console.log('apelez functia de convert');
-        console.log('amount'+amount+'base_currency'+base_currency+'rest_symb'+rest_symbols);
+        var data = {
+            base: base_currency,
+            symbols: rest_symbols,
+            amount:amount
+
+        };
+      return  $http.post("http://127.0.0.1:8000/getdata", JSON.stringify(data)).then(function onSuccess(response, $scope) {
+            // Handle success
+            var data = response.data;
+            if(data){
+                return data;
+            }
+        });
 
     }
 });
@@ -29,7 +43,7 @@ app.controller("myCtrl", function ($scope, $rootScope) {
     $scope.onlyNumbers = /^\d+$/;
     $scope.changeColor = function () {
         $scope.myColorVariable = "Aqua";
-        console.log('updated amount');
+
         console.log($scope.records[Object.keys($scope.records)[$scope.selectedId]]['txtNum']);
         //base currency that user is tipyng
         amount=$scope.records[Object.keys($scope.records)[$scope.selectedId]]['txtNum'];
@@ -52,7 +66,17 @@ app.controller("myCtrl", function ($scope, $rootScope) {
 
         }
         //call function that send data to HomeController
-        $rootScope.convert(amount, base_currency, rest_symbols)
+        $scope.dataa=$rootScope.convert(amount, base_currency, rest_symbols)
+        console.log($scope.dataa['$$state']);
+        var log = [];
+        angular.forEach($scope.dataa['value'], function( key) {
+            this.push(key);
+        }, log);
+        console.log(log);
+        console.log('conversiii');
+        $scope.base_c='1 '+base_currency+'= ';
+        $rootScope.base_c=$scope.base_c;
+        console.log($scope.base_c);
         console.log('this is amount');
         console.log($scope.records)
         console.log(amount);
@@ -65,6 +89,9 @@ app.controller("myCtrl", function ($scope, $rootScope) {
         $scope.selectedId = $index;
         console.log($scope.selectedId);
     }
+
+
+
 
 
 
