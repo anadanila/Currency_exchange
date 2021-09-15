@@ -49,15 +49,21 @@
                             <input type="hidden" ng-model="input1" ng-init='input1=""'/>
                             <h5 class="card-title">@{{name}}</h5>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <p class="card-text" ng-model="base_c">
                                         @{{base_c}}
                                     </p>
                                 </div>
-                                <div class="col-md-6">
-                                    <p ng-class="val_unit" ng-model="unit_converted">
-                                        @{{unit_converted}}
+                                <div class="col-md-7">
+                                    <p ng-class="val_unit" ng-model="unit_converted" ng-init='unit_converted=""'/>
+                                        @{{val.unit_amount}}
                                     </p>
+                                </div>
+                                <input type="hidden" name="my_input" ng-model="resp" ng-init='resp=""'/>
+                                <input type="hidden" name="currency" ng-model="val.unit_amount" ng-init='val.unit_amount=@{{val.unit_amount}}'/>
+{{--                                <input type="hidden" name="unit_converted" ng-model="unit_converted" ng-init='unit-converted=""'--}}
+                                <div class="my">
+                                    @{{ resp }}
                                 </div>
                             </div>
                         </div>
